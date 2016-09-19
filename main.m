@@ -6,7 +6,7 @@ clear; close all; clc
 %Element
 m = 1; %mass of each element
 k = 10; 
-n = 20; %number nodes including the walls
+n = 30; %number nodes including the walls
 t_steps = 100000;
 x = zeros(t_steps,n); %x-coordinates of element
 y = zeros(t_steps,n); %y-coordinates of element
@@ -57,6 +57,7 @@ for i=1:t_steps
 
 end
 
-samples = vy(:,floor(n/2));
+% samples = vy(:,floor(n/2));
+samples = sum(vy,2);
 samples = samples./(max(samples));
 sound(samples)
