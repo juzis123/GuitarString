@@ -23,7 +23,10 @@ t = 0; %time initialzied
 x(1,:) = ((1:n)-1).*Ls;
 
 % give it a kick
-vy(1,n-1)=0.5;
+vy(1,floor(n/2))=0.5;
+
+% Keep increasing the tension slightly
+vx(1,n) = 0.01;
 
 for i=1:t_steps
     Dx = x(i,2:end)- x(i,1:end-1); % n-1
@@ -44,7 +47,7 @@ for i=1:t_steps
 %     vx(i,1) = 0;
 %     vy(i,1) = 0;
     
-    dx = vx(i+1,:)  * dt; % verplaatsing van blokje vorige tijdstap naar volgende tijdstap 
+    dx = vx(i+1,:) * dt; % verplaatsing van blokje vorige tijdstap naar volgende tijdstap 
     dy = vy(i+1,:) * dt;
     
     x(i+1,:) = x(i, :) + dx;
