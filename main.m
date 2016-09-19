@@ -1,28 +1,62 @@
+clear; close all; clc
+% Onderzoeksvragen: Conservation of Energy (fout door simulatie);
+% damping;toonhoogte als functie van: lengte, massa, veerkonstante,
+% spanning; frequency-spectrum: als function van plek van aanslag;
+% responsie op aanslag witte ruis (bruine ruis); dispersie-relatie
 %Element
-mass = 1; %mass of each element
-konstant = 1; 
-n = 1; %number elements
-t_steps = 1000;
+m = 1; %mass of each element
+k = 10; 
+n = 20; %number nodes including the walls
+t_steps = 100000;
 x = zeros(t_steps,n); %x-coordinates of element
 y = zeros(t_steps,n); %y-coordinates of element
 vx = zeros(t_steps,n); %x-velocity of element
 vy = zeros(t_steps,n); %y-velocity of element
-L_total = 5; % length string streched
-Ls = L_total/(n + 1); %length string between elements
+L_total = 7; % length string streched
+Ls = L_total/(n-1); %length string between elements
 
-L0 = 4;   % rustlengte whole snar 
-r0 = L0/(n+1);
-dt = 0.01; % time...
-t = 0;
+L0 = 4;   % rustlengte whole string 
+r0 = L0/(n+1); % length of each spring
+dt = 0.2; %time...
+t = 0; %time initialzied 
 
+x(1,:) = ((1:n)-1).*Ls;
+
+% give it a kick
+vy(1,n-1)=0.5;
 
 for i=1:t_steps
-    r = (0 - x(1))^2 +(0 - y(1))^2;
-    F = -konstant*(sqrt(r)-r0);
-    dvx = F/m * dt;
-    dvy = F/m 
+    Dx = x(i,2:end)- x(i,1:end-1); % n-1
+    Dy = y(i,2:end)- y(i,1:end-1);
     
+    % Krachten
+    Fd = -k*(1 - (r0./sqrt(Dx.^2 + Dy.^2)));
+    Fx = Dx.*Fd;
+    Fy = Dy.*Fd;
+    Fx_tot = [0 Fx(1:end-1)-Fx(2:end) 0];
+    Fy_tot = [0 Fy(1:end-1)-Fy(2:end) 0];
     
+    dvx = Fx_tot/m * dt; %change of speed of displacement 
+    dvy = Fy_tot/m * dt;
+    vx(i+1,:) = dvx  + vx(i,:); % nieuwe velocity
+    vy(i+1,:) = dvy  + vy(i,:); % nieuwe velocity
+    % Wanden stilhouden
+%     vx(i,1) = 0;
+%     vy(i,1) = 0;
+    
+    dx = vx(i+1,:)  * dt; % verplaatsing van blokje vorige tijdstap naar volgende tijdstap 
+    dy = vy(i+1,:) * dt;
+    
+    x(i+1,:) = x(i, :) + dx;
+    y(i+1,:) = y(i, :) + dy;
+    
+%     plot(x(i,:),y(i,:),'.-')
+%     xlim([0 L_total])
+%     ylim([-0.5 0.55])
+%     drawnow
 
+end
 
-
+samples = vy(:,floor(n/2));
+samples = samples./(max(samples));
+sound(samples)
