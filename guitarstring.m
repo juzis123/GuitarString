@@ -1,18 +1,20 @@
 
 % Onderzoeksvragen: Conservation of Energy (fout door simulatie);
-% damping;toonhoogte als functie van: lengte, massa, veerkonstante,
-% spanning; frequency-spectrum: als function van plek van aanslag;
+% frequency-spectrum: als function van plek van aanslag;
 % responsie op aanslag witte ruis (bruine ruis); dispersie-relatie
 %Element
 function [x,y,vx,vy] = guitarstring(filename)
-if exists(filename) == 2
+if exist(fullfile(cd, filename),'file') == 2
     disp([filename ' does not exist']);
    return; 
 end
-m = 1; %mass of each element
-k = 10; 
-n = 30; %number nodes including the walls
-t_steps = 100000;
+fileID = fopen('var.txt','r');
+sizeA = [3 Inf];
+A = fscanf(fileID,'%d %f', sizeA);
+m = A(1,2); %mass of each element
+k = A(2,2); 
+n = A(3,2); %number nodes including the walls
+t_steps = 10000;
 x = zeros(t_steps,n); %x-coordinates of element
 y = zeros(t_steps,n); %y-coordinates of element
 vx = zeros(t_steps,n); %x-velocity of element
@@ -26,19 +28,20 @@ dt = 0.2; %time...
 t = 0; %time initialzied 
 
 x(1,:) = ((1:n)-1).*Ls;
-
+Etot = zeros(t_steps,1);
 % give it a kick
-vy(1,floor(n/2))=0.5;
+for j=2:n/2
+    
+    vy(1,floor(j))=0.5;
 
-% Keep increasing the tension slightly
-vx(1,n) = 0.01;
 
 for i=1:t_steps
     Dx = x(i,2:end)- x(i,1:end-1); % n-1
     Dy = y(i,2:end)- y(i,1:end-1);
     
     % Krachten
-    Fd = -k*(1 - (r0./sqrt(Dx.^2 + Dy.^2)));
+    r = sqrt(Dx.^2 + Dy.^2);
+    Fd = -k*(1 - (r0./r));
     Fx = Dx.*Fd;
     Fy = Dy.*Fd;
     Fx_tot = [0 Fx(1:end-1)-Fx(2:end) 0];
@@ -62,10 +65,15 @@ for i=1:t_steps
 %     xlim([0 L_total])
 %     ylim([-0.5 0.55])
 %     drawnow
-
+ Etot(i) = sum(0.5 * m * (vx(i,:).^2 + vy(i,:).^2)) + sum(0.5*k*(r(i,:) - r0).^2);
+ 
 end
+plot(Etot);
 
+%     drawnow
+end
 % samples = vy(:,floor(n/2));
 samples = sum(vy,2);
 samples = samples./(max(samples));
 sound(samples)
+plot(abs(fft(samples)))
