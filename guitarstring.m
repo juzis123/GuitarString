@@ -1,9 +1,14 @@
-clear; close all; clc
+
 % Onderzoeksvragen: Conservation of Energy (fout door simulatie);
 % damping;toonhoogte als functie van: lengte, massa, veerkonstante,
 % spanning; frequency-spectrum: als function van plek van aanslag;
 % responsie op aanslag witte ruis (bruine ruis); dispersie-relatie
 %Element
+function [x,y,vx,vy] = guitarstring(filename)
+if exists(filename) == 2
+    disp([filename ' does not exist']);
+   return; 
+end
 m = 1; %mass of each element
 k = 10; 
 n = 30; %number nodes including the walls
