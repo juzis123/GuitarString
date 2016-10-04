@@ -20,6 +20,3 @@ plot(dt_range,std_Etot,'.-')
 title('Dimensionless Standard Deviation of Total Energy')
 xlabel('dt')
 ylabel('\sigma_{E_{tot}}/\langle E_{tot}\rangle')
-
-
-%%%% Influence of number of nodes
