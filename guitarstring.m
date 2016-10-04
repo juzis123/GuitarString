@@ -3,27 +3,35 @@
 % frequency-spectrum: als function van plek van aanslag;
 % responsie op aanslag witte ruis (bruine ruis); dispersie-relatie
 %Element
-function [x,y,vx,vy] = guitarstring(filename)
-	if nargin == 1
-		if exist(fullfile(cd, filename),'file') == 2
-			disp([filename ' does not exist']);
-		   return; 
-		end
-		fileID = fopen('var.txt','r');
-		sizeA = [3 Inf];
-		A = fscanf(fileID,'%d %f', sizeA);
+function [x,y,vx,vy,Etot] = guitarstring(filename)
+	% Does a guitar string simulation
+	% When a filename is provided, it will read the values from the file
+	% If no argument is provided, standard values will be used
+	% if nargin == 1
+		% if exist(fullfile(cd, filename),'file') == 2
+			% disp([filename ' does not exist']);
+		   % return; 
+		% end
+		% fileID = fopen('var.txt','r');
+		% sizeA = [3 Inf];
+		% A = fscanf(fileID,'%d %f', sizeA);
 
-		% Parameters
-		m = A(1,2); 						% Mass of each element
-		%%%% to do: make mass independent of # of nodes
-		k = A(2,2); 						% Spring constant
-		n = A(3,2);                         % Number nodes (including the walls)
-	else
-		m = 1;
-		k = 3;
-		n = 30;
-		p = 15;							% picking position
-	end
+		% % Parameters
+		% m = A(1,2); 						% Mass of each element
+		% %%%% to do: make mass independent of # of nodes
+		% k = A(2,2); 						% Spring constant
+		% n = A(3,2);                         % Number nodes (including the walls)
+	% else
+	
+	%%%% Ik denk dat we het openen van een bestand beter in een losse functie kunnen doen
+	%%%% Dat maakt 't makkelijker om veel simulaties achter elkaar te doen, bijv met 
+	%%%% variabele dt
+	
+	m = 1;
+	k = 3;
+	n = 30;
+	p = 15;							% picking position
+	% end
 
 	L_total = 7;                        % length of string (when stretched)
 	L0 = 4;   							% Length of whole string (at rest)
@@ -75,8 +83,6 @@ function [x,y,vx,vy] = guitarstring(filename)
 		% drawnow
 		Etot(i) = sum(0.5 * m * (vx(i,:).^2 + vy(i,:).^2)) + sum(0.5 * k*(r - r0).^2);
 	end
-	
-	plot(Etot);
 
 	%     drawnow
 	% samples = vy(:,floor(n/2));
