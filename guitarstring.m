@@ -16,12 +16,13 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	M 	= 20;							% Total mass
 	k 	= 3;							% Spring constant
 	n 	= 30;							% Number of nodes
-	p 	= 15;							% picking position
+	p 	= round(n/2);					% picking position
 	Ltot = 7;                        	% length of string (when stretched)
 	L0 	= 4;   							% Length of whole string (at rest)
 	dt 	= 0.01; 						% Size of simulation time step
 	t 	= 0; 							% Starting time
 	steps = 50000;
+	vy0 = 0.5;
 	
 	% If a settings struct argument is given, apply all variables it contains
 	if nargin == 1
@@ -34,6 +35,7 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		if isfield(settings,'dt'); 		dt = settings.dt;		end;
 		if isfield(settings,'t'); 		t = settings.t;			end;
 		if isfield(settings,'steps'); 	steps = settings.steps; end;
+		if isfield(settings,'vy0');		vy0 = settings.vy0;		end;
 	end
 
 
@@ -50,7 +52,7 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	Etot = zeros(steps,1);
 
 	% give it a kick
-	vy(1,p)=0.5;
+	vy(1,p)=vy0;
 
 
 	for i=1:steps
@@ -68,6 +70,8 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		dvx = Fx_tot/m * dt; 					% Change of velocity x
 		dvy = Fy_tot/m * dt;					% Change of velocity y
 		vx(i+1,:) = dvx  + vx(i,:); 			% New velocity x
+		length(vy);
+		length(dvy); %%%%% ???
 		vy(i+1,:) = dvy  + vy(i,:); 			% New velocity y
 		
 		dx = vx(i+1,:) * dt; 					% Displacement of node x component
