@@ -23,16 +23,17 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	t 	= 0; 							% Starting time
 	steps = 50000;
 	
+	% If a settings struct argument is given, apply all variables it contains
 	if nargin == 1
-		M 		= settings.M;
-		k 		= settings.k;
-		n 		= settings.n;
-		p 		= settings.p;
-		Ltot 	= settings.Ltot;
-		L0 		= settings.L0;
-		dt		= settings.dt;
-		t		= settings.t;
-		steps	= settings.steps;
+		if isfield(settings,'M'); 		M = settings.M; 		end;
+		if isfield(settings,'k'); 		k = settings.k; 		end;
+		if isfield(settings,'n'); 		n = settings.n; 		end;
+		if isfield(settings,'p'); 		p = settings.p; 		end;
+		if isfield(settings,'Ltot'); 	Ltot = settings.Ltot; 	end;
+		if isfield(settings,'L0'); 		L0 = settings.L0; 		end;
+		if isfield(settings,'dt'); 		dt = settings.dt;		end;
+		if isfield(settings,'t'); 		t = settings.t;			end;
+		if isfield(settings,'steps'); 	steps = settings.steps; end;
 	end
 
 
