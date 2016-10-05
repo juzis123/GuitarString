@@ -1,11 +1,11 @@
 clear; close all; clc;
 
 % Define what dt's to test
-dt_min = 1e-4;
-dt_max = 4e-2;
-dt_step = 4e-4;
+vy0_min = 1e-3;
+vy0_max = 1e0;
+vy0_step = 1e-3;
 settings.steps = 30000;
-settings.vy0 = 0.2;
+settings.dt = 2e-3;
 
 % Initalizations
 dt_range = dt_min:dt_step:dt_max;
