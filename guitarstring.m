@@ -16,7 +16,7 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	M 	= 20;							% Total mass
 	k 	= 3;							% Spring constant
 	n 	= 30;							% Number of nodes
-	p 	= round(n/2);					% picking position
+	p 	= 0.5;							% relative picking position
 	Ltot = 7;                        	% length of string (when stretched)
 	L0 	= 4;   							% Length of whole string (at rest)
 	dt 	= 0.01; 						% Size of simulation time step
@@ -52,7 +52,7 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	Etot = zeros(steps,1);
 
 	% give it a kick
-	vy(1,p)=vy0;
+	vy(1,round(n*p)) = vy0;
 
 
 	for i=1:steps
@@ -70,8 +70,6 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		dvx = Fx_tot/m * dt; 					% Change of velocity x
 		dvy = Fy_tot/m * dt;					% Change of velocity y
 		vx(i+1,:) = dvx  + vx(i,:); 			% New velocity x
-		length(vy);
-		length(dvy); %%%%% ???
 		vy(i+1,:) = dvy  + vy(i,:); 			% New velocity y
 		
 		dx = vx(i+1,:) * dt; 					% Displacement of node x component

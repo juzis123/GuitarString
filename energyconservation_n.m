@@ -1,10 +1,11 @@
 clear; close all; clc;
 
 % Define what dt's to test
-n_min = 4;
-n_max = 50;
+n_min = 3;
+n_max = 60;
 n_step = 1;
 settings.steps = 30000;
+settings.vy0 = 0.3;
 
 % Initalizations
 n_range = n_min:n_step:n_max;
@@ -15,11 +16,11 @@ for i = 1:length(n_range)
 	settings.n = n_range(i);
 	[x,y,vx,vy,Etot] = guitarstring(settings);
 	std_Etot(i) = std(Etot)/mean(Etot);
-	fprintf('%i/%i - %.0f%% done\n',i,length(dt_range),round(i/length(dt_range)*100));
+	fprintf('%i/%i - %.0f%% done\n',i,length(n_range),round(i/length(n_range)*100));
 end
 
 % Plot the relation
-plot(dt_range,std_Etot,'.-')
-title('Dimensionless Standard Deviation of Total Energy')
+plot(n_range,std_Etot,'.-')
+title('Normalized Standard Deviation of Total Energy')
 xlabel('n')
 ylabel('\sigma_{E_{tot}}/\langle E_{tot}\rangle')
