@@ -18,6 +18,7 @@ for i = 1:length(n_range)
 	fprintf('%i/%i - %.0f%% done\n',i,length(dt_range),round(i/length(dt_range)*100));
 end
 
+% Plot the relation
 plot(dt_range,std_Etot,'.-')
 title('Dimensionless Standard Deviation of Total Energy')
 xlabel('n')
