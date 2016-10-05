@@ -84,7 +84,8 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		% xlim([0 Ltot])
 		% ylim([-0.5 0.55])
 		% drawnow
-		Etot(i) = sum(0.5 * m * (vx(i,:).^2 + vy(i,:).^2)) + sum(0.5 * k*(r - r0).^2);
+       % total energy at a certain point in time
+		Etot(i) = sum(0.5 * m * (vx(i,:).^2 + vy(i,:).^2)) + sum(0.5 * k*(r - r0).^2); 
 	end
 
 	%     drawnow
