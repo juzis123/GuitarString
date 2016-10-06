@@ -53,9 +53,15 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 
 	% give it a kick
 	vy(1,round(n*p)) = vy0;
-
-
-	for i=1:steps
+	
+	% Calculate total energy of first timestep
+	Dx = x(1,2:end)- x(1,1:end-1); 			% Spring lengths x components
+	Dy = y(1,2:end)- y(1,1:end-1);			% Spring lengths y components
+	r = sqrt(Dx.^2 + Dy.^2);				% Spring lengths
+	Etot(1) = sum(0.5 * m * (vx(1,:).^2 + vy(1,:).^2)) + sum(0.5 * k*(r - r0).^2);
+	
+	% Simulate the guitar string
+	for i=1:steps-1
 		Dx = x(i,2:end)- x(i,1:end-1); 			% Spring lengths x components
 		Dy = y(i,2:end)- y(i,1:end-1);			% Spring lengths y components
 		
@@ -82,7 +88,7 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		% xlim([0 Ltot])
 		% ylim([-0.5 0.55])
 		% drawnow
-		Etot(i) = sum(0.5 * m * (vx(i,:).^2 + vy(i,:).^2)) + sum(0.5 * k*(r - r0).^2);
+		Etot(i+1) = sum(0.5 * m * (vx(i,:).^2 + vy(i,:).^2)) + sum(0.5 * k*(r - r0).^2);
 	end
 
 	%     drawnow
