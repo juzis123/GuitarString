@@ -5,7 +5,6 @@ dt_min = 1e-4;
 dt_max = 4e-2;
 dt_step = 4e-4;
 settings.steps = 30000;
-settings.vy0 = 0.2;
 
 % Initalizations
 dt_range = dt_min:dt_step:dt_max;

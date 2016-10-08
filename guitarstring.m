@@ -16,13 +16,13 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	M 	= 20;							% Total mass
 	k 	= 3;							% Spring constant
 	n 	= 30;							% Number of nodes
-	p 	= 0.5;							% relative picking position
+	p 	= 2;							% relative picking position
 	Ltot = 7;                        	% length of string (when stretched)
 	L0 	= 4;   							% Length of whole string (at rest)
-	dt 	= 0.01; 						% Size of simulation time step
+	dt 	= 0.001; 						% Size of simulation time step
 	t 	= 0; 							% Starting time
 	steps = 50000;
-	vy0 = 0.5;
+	vy0 = 0.1;
 	
 	% If a settings struct argument is given, apply all variables it contains
 	if nargin == 1
@@ -52,7 +52,7 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	Etot = zeros(steps,1);
 
 	% give it a kick
-	vy(1,round(n*p)) = vy0;
+	vy(1,round(p)) = vy0;
 	
 	% Calculate total energy of first timestep
 	Dx = x(1,2:end)- x(1,1:end-1); 			% Spring lengths x components
