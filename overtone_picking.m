@@ -1,4 +1,4 @@
-clear; close all; clc;
+% clear; close all; clc;
 
 % Define what dt's to test
 settings.n = 60;
@@ -24,9 +24,7 @@ n_sims = length(p_range);
 
 % Calculate speed^2
 settings.p = round(2);
-[x,y,vx,vy,Etot] = guitarstring(settings);
-vsq = sum(vy,2);		% Sum of square of all node velocities
-% plot(abs(fft(vsq)),'.-')
+% [x,y,vx,vy,Etot] = guitarstring(settings);
 
 % x_fast=downsample(x,10); y_fast=downsample(y,10);
 % for i=1:settings.steps
@@ -35,8 +33,27 @@ vsq = sum(vy,2);		% Sum of square of all node velocities
 	% drawnow
 % end
 
-samples = downsample(sum(y,2),30);
+% Calculate samples
+samples = sum(y,2);
 samples = samples/max(samples);
-sound(samples)
+
+% Isolate base tone and overtones
+freqspec = abs(fft(samples));
+% nf = length(freqspec);
+[freqsort,ifs] = sort(freqspec);
+% pks = zeros(1,nf);
+% pks(freqspec>mean(freqsort(nf*0.998:nf))) = 1;
+% peakstend = pks(2:end) - pks(1:end-1);
+
+plot(freqspec)
+hold on
+plot(ifs(end-10,end),freqsort(end-10,end),'or')
+hold off
+
+ntones = 10;
+tonesize = zeros(1,ntones);
+
+
+
 
 
