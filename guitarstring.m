@@ -9,10 +9,6 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	% When a filename is provided, it will read the values from the file
 	% If no argument is provided, standard values will be used
 	
-	%%%% Ik denk dat we het openen van een bestand beter in een losse functie kunnen doen
-	%%%% Dat maakt 't makkelijker om veel simulaties achter elkaar te doen, bijv met 
-	%%%% variabele dt
-	
 	M 	= 20;							% Total mass
 	k 	= 3;							% Spring constant
 	n 	= 30;							% Number of nodes
@@ -20,7 +16,6 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	Ltot = 7;                        	% length of string (when stretched)
 	L0 	= 4;   							% Length of whole string (at rest)
 	dt 	= 0.005; 						% Size of simulation time step
-	t 	= 0; 							% Starting time
 	steps = 50000;
 	vy0 = 0.1;
 	
@@ -84,17 +79,6 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		x(i+1,:) = x(i, :) + dx;				% New x position
 		y(i+1,:) = y(i, :) + dy;				% New y position
 		
-		% plot(x(i,:),y(i,:),'.-')
-		% xlim([0 Ltot])
-		% ylim([-0.5 0.55])
-		% drawnow
 		Etot(i+1) = sum(0.5 * m * (vx(i,:).^2 + vy(i,:).^2)) + sum(0.5 * k*(r - r0).^2);
 	end
-
-	%     drawnow
-	% samples = vy(:,floor(n/2));
-	% samples = sum(vy,2);
-	% samples = samples./(max(samples));
-	% sound(samples)
-	% plot(abs(fft(samples)))
 end
