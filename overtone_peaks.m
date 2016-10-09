@@ -12,7 +12,7 @@ function overtones = overtone_peaks(samples)
 	nf = length(freqspec);			                % Get frequency spectrum array length
 	[freqsort,ifs] = sort(freqspec);	            % Get sorted list of amplitudes
 	pks = zeros(1,nf);	                            % Initialize peak indication array
-	pks(freqspec>mean(freqsort(nf*0.995:nf))) = 1;	% its a peak, if > average of highest 0.5%
+	pks(freqspec>mean(freqsort(nf*0.99:nf))) = 1;	% its a peak, if > average of highest 0.5%
 
 	% Retrieve peak starts and ends
 	dpks = pks(2:end) - pks(1:end-1);		        % Peak indication difference array; 1 @ start, -1 @ end, else 0
@@ -24,7 +24,7 @@ function overtones = overtone_peaks(samples)
 	if length(pkstarts)<2 && length(pkends)<2
 		error('Less than two peaks found!')
 	elseif(pkstarts(1)>pkends(1))
-		error('First peak not well defined! Can''t find start.')
+		pkstarts = [1 pkstarts];
 	end
 
 	% Create array of overtone sizes
