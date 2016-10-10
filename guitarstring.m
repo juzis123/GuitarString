@@ -9,20 +9,15 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	% When a filename is provided, it will read the values from the file
 	% If no argument is provided, standard values will be used
 	
-	%%%% Ik denk dat we het openen van een bestand beter in een losse functie kunnen doen
-	%%%% Dat maakt 't makkelijker om veel simulaties achter elkaar te doen, bijv met 
-	%%%% variabele dt
-	
 	M 	= 20;							% Total mass
 	k 	= 3;							% Spring constant
 	n 	= 30;							% Number of nodes
-	p 	= round(n/2);					% picking position
+	p 	= 2;							% relative picking position
 	Ltot = 7;                        	% length of string (when stretched)
 	L0 	= 4;   							% Length of whole string (at rest)
-	dt 	= 0.01; 						% Size of simulation time step
-	t 	= 0; 							% Starting time
+	dt 	= 0.005; 						% Size of simulation time step
 	steps = 50000;
-	vy0 = 0.5;
+	vy0 = 0.1;
 	
 	% If a settings struct argument is given, apply all variables it contains
 	if nargin == 1
@@ -52,10 +47,16 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	Etot = zeros(steps,1);
 
 	% give it a kick
-	vy(1,p)=vy0;
-
-
-	for i=1:steps
+	vy(1,round(p)) = vy0;
+	
+	% Calculate total energy of first timestep
+	Dx = x(1,2:end)- x(1,1:end-1); 			% Spring lengths x components
+	Dy = y(1,2:end)- y(1,1:end-1);			% Spring lengths y components
+	r = sqrt(Dx.^2 + Dy.^2);				% Spring lengths
+	Etot(1) = sum(0.5 * m * (vx(1,:).^2 + vy(1,:).^2)) + sum(0.5 * k*(r - r0).^2);
+	
+	% Simulate the guitar string
+	for i=1:steps-1
 		Dx = x(i,2:end)- x(i,1:end-1); 			% Spring lengths x components
 		Dy = y(i,2:end)- y(i,1:end-1);			% Spring lengths y components
 		
@@ -70,8 +71,6 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		dvx = Fx_tot/m * dt; 					% Change of velocity x
 		dvy = Fy_tot/m * dt;					% Change of velocity y
 		vx(i+1,:) = dvx  + vx(i,:); 			% New velocity x
-		length(vy);
-		length(dvy); %%%%% ???
 		vy(i+1,:) = dvy  + vy(i,:); 			% New velocity y
 		
 		dx = vx(i+1,:) * dt; 					% Displacement of node x component
@@ -80,18 +79,6 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		x(i+1,:) = x(i, :) + dx;				% New x position
 		y(i+1,:) = y(i, :) + dy;				% New y position
 		
-		% plot(x(i,:),y(i,:),'.-')
-		% xlim([0 Ltot])
-		% ylim([-0.5 0.55])
-		% drawnow
-       % total energy at a certain point in time
-		Etot(i) = sum(0.5 * m * (vx(i,:).^2 + vy(i,:).^2)) + sum(0.5 * k*(r - r0).^2); 
+		Etot(i+1) = sum(0.5 * m * (vx(i,:).^2 + vy(i,:).^2)) + sum(0.5 * k*(r - r0).^2);
 	end
-
-	%     drawnow
-	% samples = vy(:,floor(n/2));
-	% samples = sum(vy,2);
-	% samples = samples./(max(samples));
-	% sound(samples)
-	% plot(abs(fft(samples)))
 end

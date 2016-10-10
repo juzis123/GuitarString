@@ -1,25 +1,27 @@
 clear; close all; clc;
 
 % Define what dt's to test
-dt_min = 1e-4;
-dt_max = 4e-2;
-dt_step = 4e-4;
+vy0_min = 1e-3;
+vy0_max = 2e0;
+vy0_step = 1e-2;
 settings.steps = 30000;
+settings.dt = 1e-3;
 
 % Initalizations
-dt_range = dt_min:dt_step:dt_max;
-std_Etot = zeros(1,length(dt_range));
+vy0_range = vy0_min:vy0_step:vy0_max;
+n_sims = length(vy0_range);
+std_Etot = zeros(1,n_sims);
 
 % Test all the dt's
-for i = 1:length(dt_range)
-	settings.dt = dt_range(i);
+for i = 1:n_sims
+	settings.vy0 = vy0_range(i);
 	[~,~,~,~,Etot] = guitarstring(settings);
 	std_Etot(i) = std(Etot)/mean(Etot);
-	fprintf('%i/%i - %.0f%% done\n',i,length(dt_range),round(i/length(dt_range)*100));
+	fprintf('%i/%i - %.0f%% done\n',i,n_sims,round(i/n_sims*100));
 end
 
 % Plot the relation
-plot(dt_range,std_Etot,'.-')
+plot(vy0_range,std_Etot,'.-')
 title('Dimensionless Standard Deviation of Total Energy')
-xlabel('dt')
+xlabel('v_{y,0}')
 ylabel('\sigma_{E_{tot}}/\langle E_{tot}\rangle')
