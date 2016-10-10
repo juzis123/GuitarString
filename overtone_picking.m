@@ -67,7 +67,7 @@ figure
 freq_img = log(vypfreqspec(:,1:ceil(freq_plotmax)));
 xfreq = linspace(0,2*pi/(settings.steps*settings.dt),1000);
 yfreq = linspace(0,1,1000);
-imagesc(xfreq,yfreq,freq_img,[1 7])
+imagesc(xfreq,yfreq,freq_img,[1 8])
 ylabel('Relative picking position')
 xlabel('\omega [s^{-1}]')
 title('\langle v_y^2\rangle Frequency Spectrum for Picking Position - Heat Map')
