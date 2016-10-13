@@ -1,3 +1,4 @@
+% gets
 function [structu] = openguitar (filename)
 cd = 'C:\Users\Judith\Documents\MATLAB\GuitarString';
     if exist(fullfile(cd, filename),'file') ~= 2 

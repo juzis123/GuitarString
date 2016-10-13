@@ -9,15 +9,15 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	% When a filename is provided, it will read the values from the file
 	% If no argument is provided, standard values will be used
 	
-	M 	= 20;							% Total mass
-	k 	= 3;							% Spring constant
-	n 	= 30;							% Number of nodes
-	p 	= 2;							% relative picking position
-	Ltot = 7;                        	% length of string (when stretched)
-	L0 	= 4;   							% Length of whole string (at rest)
-	dt 	= 0.005; 						% Size of simulation time step
-	steps = 50000;
-	vy0 = 0.1;
+	M 	= 20;			% Total mass
+	k 	= 3;			% Spring constant
+	n 	= 30;			% Number of nodes
+	p 	= 2;        	% relative picking position
+	Ltot = 7;          	% length of string (when stretched)
+	L0 	= 4;   			% Length of whole string (at rest)
+	dt 	= 0.005; 		% Size of simulation time step
+	steps = 50000;      % number of time steps
+	vy0 = 0.1;          %Starting speed of first node
 	
 	% If a settings struct argument is given, apply all variables it contains
 	if nargin == 1
@@ -80,5 +80,11 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		y(i+1,:) = y(i, :) + dy;				% New y position
 		
 		Etot(i+1) = sum(0.5 * m * (vx(i,:).^2 + vy(i,:).^2)) + sum(0.5 * k*(r - r0).^2);
-	end
+         
+    end
+    
+    edit 'guitarstring.txt';
+    fopen('guitarstring.txt','wt');
+    diary('guitarstring.txt');
+    
 end
