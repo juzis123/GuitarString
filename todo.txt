@@ -2,7 +2,7 @@
 == PiE - Matlab ==
 ===== TO DO ======
 ==================
-- add comments everywhere
+✓ add comments everywhere
 ✓ say something about writeguitar and openguitar functions in report
 - say something about guitarstring_animate.m in report
 ✓ clean up dir

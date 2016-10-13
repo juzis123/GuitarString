@@ -1,4 +1,3 @@
-
 function [structu] = openguitar(filename)
 	% Opens guitar settings file and returns a corresponding struct
     uiopen(filename)
