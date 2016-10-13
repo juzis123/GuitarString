@@ -1,11 +1,13 @@
 close all;
-settings.dt = 0.1;
+settings.dt = 0.01;
 [x,y,vx,vy,Etot] = guitarstring(settings);
+[imax,~] = size(x);
+xani = downsample(x,10);
+yani = downsample(y,10);
 
-[imax,~] = size(x)
-
+figure
 for i=1:imax
-	plot(x(i,:),y(i,:),'.-')
-	ylim([-0.1 0.1])
+	plot(xani(i,:),yani(i,:),'.-')
+	ylim([-0.05 0.05])
 	drawnow
 end

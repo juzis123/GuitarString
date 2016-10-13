@@ -1,9 +1,3 @@
-
-% Onderzoeksvragen: Conservation of Energy (fout door simulatie);
-% frequency-spectrum: als function van plek van aanslag;
-% responsie op aanslag witte ruis (bruine ruis); dispersie-relatie
-%Element
-
 function [x,y,vx,vy,Etot] = guitarstring(settings)
 	% Does a guitar string simulation
 	% When a filename is provided, it will read the values from the file
@@ -28,7 +22,6 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		if isfield(settings,'Ltot'); 	Ltot = settings.Ltot; 	end;
 		if isfield(settings,'L0'); 		L0 = settings.L0; 		end;
 		if isfield(settings,'dt'); 		dt = settings.dt;		end;
-		if isfield(settings,'t'); 		t = settings.t;			end;
 		if isfield(settings,'steps'); 	steps = settings.steps; end;
 		if isfield(settings,'vy0');		vy0 = settings.vy0;		end;
 	end
@@ -44,7 +37,7 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 	vy 	= zeros(steps,n); 				% y-velocity of element
 
 	x(1,:) = ((1:n)-1).*Ls;				% distribute nodes evenly across length
-	Etot = zeros(steps,1);
+	Etot = zeros(steps,1);				% Initialize total energy
 
 	% give it a kick
 	vy(1,round(p)) = vy0;
@@ -79,12 +72,7 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		x(i+1,:) = x(i, :) + dx;				% New x position
 		y(i+1,:) = y(i, :) + dy;				% New y position
 		
+		% Calculate total energy
 		Etot(i+1) = sum(0.5 * m * (vx(i,:).^2 + vy(i,:).^2)) + sum(0.5 * k*(r - r0).^2);
-         
     end
-    
-    edit 'guitarstring.txt';
-    fopen('guitarstring.txt','wt');
-    diary('guitarstring.txt');
-    
 end
