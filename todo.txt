@@ -1,0 +1,3 @@
+- github link noemen
+- check guidelines pdf
+- naam en snummer in elk bestand
