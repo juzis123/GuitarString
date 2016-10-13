@@ -2,7 +2,7 @@ clear; close all; clc;
 
 % Define what dt's to test
 n_min = 3;
-n_max = 60;
+n_max = 240;
 n_step = 1;
 settings.steps = 30000;
 
