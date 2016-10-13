@@ -3,6 +3,6 @@
 ===== TO DO ======
 ==================
 - add comments everywhere
-- say something about writeguitar and openguitar functions in report
+✓ say something about writeguitar and openguitar functions in report
 - say something about guitarstring_animate.m in report
-- clean up dir
+✓ clean up dir
