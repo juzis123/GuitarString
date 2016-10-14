@@ -1,6 +1,9 @@
+% Judith Zissoldt (s1332171) and Daniel Cox (s1228579)
 function [x,y,vx,vy,Etot] = guitarstring(settings)
+	% Guitar String Simulation
 	% Does a guitar string simulation
-	% When a filename is provided, it will read the values from the file
+	% When a struct is provided with at least one property, it will use those
+	% Missing parameters will be set to the standard values
 	% If no argument is provided, standard values will be used
 	
 	M 	= 20;			% Total mass

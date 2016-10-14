@@ -1,3 +1,4 @@
+% Judith Zissoldt (s1332171) and Daniel Cox (s1228579)
 % Normalized Standard Deviation of Total Energy as a function of picking position
 % Runs simulation for different picking positions
 clear; close all; clc;

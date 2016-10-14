@@ -1,3 +1,4 @@
+% Judith Zissoldt (s1332171) and Daniel Cox (s1228579)
 % Normalized Standard Deviation of Total Energy as a function of initial node velocity
 % Runs simulation for different initial node velocities
 clear; close all; clc;

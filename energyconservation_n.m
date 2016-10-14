@@ -1,3 +1,4 @@
+% Judith Zissoldt (s1332171) and Daniel Cox (s1228579)
 % Normalized Standard Deviation of Total Energy as a function of number of nodes
 % Runs simulation for different number of nodes
 clear; close all; clc;

@@ -1,3 +1,4 @@
+% Judith Zissoldt (s1332171) and Daniel Cox (s1228579)
 % Script for showing the result as an animation
 clear; close all; clc;
 

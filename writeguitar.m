@@ -1,3 +1,4 @@
+% Judith Zissoldt (s1332171) and Daniel Cox (s1228579)
 function [file] = writeguitar(settings)
 	% Write a guitar string simulation settings file
 	% Input: the settings struct, containing one or more

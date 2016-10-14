@@ -1,3 +1,4 @@
+% Judith Zissoldt (s1332171) and Daniel Cox (s1228579)
 % Normalized Standard Deviation of Total Energy as a function of time step size
 % Runs simulation for different time steps dt
 clear; close all; clc;

@@ -1,3 +1,4 @@
+% Judith Zissoldt (s1332171) and Daniel Cox (s1228579)
 function ETAstr = gs_ETA(n,N,starttime,output_type,console_text,skipframes)
 	% Calculate linearly Estimated Time for Arrival
 	% Input:

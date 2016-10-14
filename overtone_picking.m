@@ -1,3 +1,4 @@
+% Judith Zissoldt (s1332171) and Daniel Cox (s1228579)
 % Overtone picking
 % Runs the simulation several times for different picking positions
 % and shows a heatmap of the frequency spectrum
