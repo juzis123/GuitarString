@@ -56,7 +56,7 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		Dx = x(i,2:end)- x(i,1:end-1); 			% Spring lengths x components
 		Dy = y(i,2:end)- y(i,1:end-1);			% Spring lengths y components
 		
-		% Krachten
+		% Calculate forces
 		r = sqrt(Dx.^2 + Dy.^2);				% Spring lengths
 		Fd = -k*(1 - (r0./r));
 		Fx = Dx.*Fd;							% Force x component
@@ -64,6 +64,7 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		Fx_tot = [0 Fx(1:end-1)-Fx(2:end) 0];	% Combined forces x component
 		Fy_tot = [0 Fy(1:end-1)-Fy(2:end) 0];	% Combined forces y component
 		
+		% Apply Euler
 		dvx = Fx_tot/m * dt; 					% Change of velocity x
 		dvy = Fy_tot/m * dt;					% Change of velocity y
 		vx(i+1,:) = dvx  + vx(i,:); 			% New velocity x
@@ -72,8 +73,8 @@ function [x,y,vx,vy,Etot] = guitarstring(settings)
 		dx = vx(i+1,:) * dt; 					% Displacement of node x component
 		dy = vy(i+1,:) * dt;					% Displacement of node y component
 		
-		x(i+1,:) = x(i, :) + dx;				% New x position
-		y(i+1,:) = y(i, :) + dy;				% New y position
+		x(i+1,:) = x(i,:) + dx;					% New x position
+		y(i+1,:) = y(i,:) + dy;					% New y position
 		
 		% Calculate total energy
 		Etot(i+1) = sum(0.5 * m * (vx(i,:).^2 + vy(i,:).^2)) + sum(0.5 * k*(r - r0).^2);
