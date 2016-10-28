@@ -5,14 +5,14 @@
 clear; close all; clc;
 
 % Define what dt's to test
-settings.n = 100;							% Set number of nodes to 100
+settings.n = 150;							% Set number of nodes to 100
 p_min = 2;									% Set first picking position
 p_max = round(settings.n-1);				% Set last picking position
 p_step = 1;									% Set picking position step
 settings.steps = 25e4;						% Set number of simulation time steps
 settings.dt = 0.002;						% Set size of time step
-settings.M = 20;							% Total mass of spring
-settings.k = 3;								% Spring constant
+settings.M = 3;								% Total mass of spring
+settings.k = 6;								% Spring constant
 console_text = 'Simulating for different picking positions...'; % Text in console during simulations
 
 % Number of theoretical harmonic eigenfrequencies, that fit in the plot.
@@ -63,7 +63,7 @@ figure														% Spawn new figure
 freq_img = log(ypfreqspec(:,1:ceil(freq_plotmax)));			% Chop off interesting bit and take log()
 xfreq = linspace(0,2*pi/(settings.steps*settings.dt),1000); % Generate x-axis ticks
 yfreq = linspace(0,1,1000);									% Generate y-axis ticks
-imagesc(xfreq,yfreq,freq_img,[3 9])							% Plot heat map with saturated color map
+imagesc(xfreq,yfreq,freq_img,[4 9])							% Plot heat map with saturated color map
 ylabel('Relative picking position')							% Set y-label
 xlabel('\omega [s^{-1}]')									% Set x-label
 title('\langle y^2\rangle Frequency Spectrum for Picking Position - Heat Map')
